@@ -19,6 +19,12 @@ rustc-serialize = "~0.3"
 byteorder       = "~1.1"
 rust-base58     = "~0.0"
 seek_bufread    = "~1.2"
+csv             = "~1"
+blist           = "~0.0.4"
+chrono          = "~0.4.6"
+twox-hash       = "~1.1.1"
+union-find      = "~0.3.1"
+
 
 # The development profile, used for `cargo build`
 [profile.dev]

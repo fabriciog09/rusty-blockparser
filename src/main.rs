@@ -7,10 +7,12 @@ extern crate crypto;
 #[macro_use]
 extern crate clap;
 extern crate rustc_serialize;
-//extern crate twox_hash; // requires rust-nightly
+extern crate twox_hash; // requires rust-nightly
 extern crate byteorder;
 extern crate rust_base58;
 extern crate seek_bufread;
+extern crate csv;
+extern crate union_find;
 
 #[macro_use]
 pub mod errors;
@@ -39,6 +41,7 @@ use callbacks::Callback;
 use callbacks::stats::SimpleStats;
 use callbacks::csvdump::CsvDump;
 use callbacks::unspentcsvdump::UnspentCsvDump;
+use callbacks::bootstrap_taint_fifo::TaintFifo;
 
 
 /// Holds all available user arguments
@@ -225,6 +228,7 @@ fn parse_args() -> OpResult<ParserOptions> {
         .subcommand(UnspentCsvDump::build_subcommand())
         .subcommand(CsvDump::build_subcommand())
         .subcommand(SimpleStats::build_subcommand())
+        .subcommand(TaintFifo::build_subcommand())
         .get_matches();
 
     // Set flags
@@ -255,6 +259,8 @@ fn parse_args() -> OpResult<ParserOptions> {
          callback = Box::new(try!(CsvDump::new(matches)));
     } else if let Some(ref matches) = matches.subcommand_matches("unspentcsvdump") {
          callback = Box::new(try!(UnspentCsvDump::new(matches)));
+    } else if let Some(ref matches) = matches.subcommand_matches("taintfifo") {
+         callback = Box::new(try!(TaintFifo::new(matches)));
     } else {
         clap::Error {
             message: String::from("error: No Callback specified.\nFor more information try --help"),

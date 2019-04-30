@@ -259,7 +259,7 @@ fn parse_args() -> OpResult<ParserOptions> {
          callback = Box::new(try!(CsvDump::new(matches)));
     } else if let Some(ref matches) = matches.subcommand_matches("unspentcsvdump") {
          callback = Box::new(try!(UnspentCsvDump::new(matches)));
-    } else if let Some(ref matches) = matches.subcommand_matches("taintfifo") {
+    } else if let Some(ref matches) = matches.subcommand_matches("taintFIFO") {
          callback = Box::new(try!(TaintFifo::new(matches)));
     } else {
         clap::Error {
